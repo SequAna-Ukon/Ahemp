@@ -2,24 +2,42 @@
 Acropora hemprichii genome structural and functional annotation
 - The quality of the assembled genome was assessed using BlobToolKit (BTK), full handout for how to run it can be found here (https://github.com/blobtoolkit/tutorials/tree/main/futurelearn).Also, a course on BTK is avaliable as well https://www.futurelearn.com/courses/eukaryotic-genome-assembly-how-to-use-blobtoolkit-for-quality-assessment
 
-- After first BTK check, ~90 contigs were removed because of low coverage or no-related taxa.
-- BTK re-runed with the filtered assembly and another 528 contigs were removed for low coverage or no-related taxa contigs.
+- After first BTK check, ~90 contigs were removed because of low coverage or no-related taxa (Ahemp.gapclosed_f1.fasta).
+- BTK re-runed with the filtered assembly and another 528 contigs were removed for low coverage or no-related taxa contigs (Ahemp.gapclosed_f2.fasta).
+
+# Identifiy rRNA 
+
+````bash
+./barrnap -q -k euk Ahemp.gapclosed_f2.fasta --threads 50 --outseq Ahemp_rrna.fasta > Ahemp_rrna..gff 
+````
+
 ## Identifying and maksing Repeats
 - Repeats in Ahemp and avliable Acropora's coral genomes using RepeatModeler
 
 ````bash
 singularity pull dfam-tetools-latest.sif docker://dfam/tetools:latest
-singularity run dfam-tetools-latest.sif
-singularity run ../../dfam-tetools-latest.sif BuildDatabase -name Ahemp_genome ../Ahemp_genome/Ahemp.gapclosed.fasta
-singularity run ../../dfam-tetools-latest.sif RepeatModeler -database Ahemp_genome -LTRStruct -threads 40
+singularity run dfam-tetools-latest.sif BuildDatabase -name Ahemp_genome Ahemp.gapclosed_f2.fasta
+singularity run dfam-tetools-latest.sif RepeatModeler -database Ahemp_genome -LTRStruct -threads 40
+- Repeats in avliable Acropora's coral genomes
+for i in `ls *.fna|sed 's/.fna//g`;
+do
+    singularity run ../../dfam-tetools-latest.sif BuildDatabase -name $i $i.fna
+    singularity run ../../dfam-tetools-latest.sif RepeatModeler -database $i -LTRStruct -threads 40;
+done
 ````
+
+
 - Repeats database assembly
-cat *.families
+cat *-families.fa > Acropora_RE_DB.fsa
 unsearch ...
 
-singularity run /cvmfs/singularity.metacentrum.cz/TE-Tools/TE-tools-1.4.sif RepeatMasker assemblies/GCA_001630525.1.fna -lib Scene-families_renamed.fasta -pa 8 -norna -nolow -xsmall
+- Repeats masking in Ahemp using Acropora repeats DB
+ 
+singularity run dfam-tetools-latest.sif RepeatMasker Ahemp.gapclosed_f2.fasta -lib Acropora_RE_DB.fsa -pa 8 -norna -nolow -xsmall
 
-## How is the distribution of repeats by types?
+## How is the distribution of#rRNA
+./barrnap -q -k euk ../../Desmodesmus_quadricauda.scaffolds.fa --threads 50 --outseq ../../Desmodesmus_quadricauda.rrna.fasta > ../../rrna.gff 
+ repeats by types?
 grep '>' Dehan101_genome-families.fa | sed -r 's/.+#//' | sed -r 's/\s+.+//' | sort | uniq -c
 
 

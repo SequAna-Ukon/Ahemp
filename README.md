@@ -19,9 +19,9 @@ singularity pull dfam-tetools-latest.sif docker://dfam/tetools:latest
 singularity run dfam-tetools-latest.sif BuildDatabase -name Ahemp_genome Ahemp.gapclosed_f2.fasta
 singularity run dfam-tetools-latest.sif RepeatModeler -database Ahemp_genome -LTRStruct -threads 40
 - Repeats in avliable Acropora's coral genomes
-for i in `ls *.fna|sed 's/.fna//g`;
+for i in `ls *.fna|sed 's/_genomic.fna//g`;
 do
-    singularity run ../../dfam-tetools-latest.sif BuildDatabase -name $i $i.fna
+    singularity run ../../dfam-tetools-latest.sif BuildDatabase -name $i ${i}_genomic.fna
     singularity run ../../dfam-tetools-latest.sif RepeatModeler -database $i -LTRStruct -threads 40;
 done
 ````

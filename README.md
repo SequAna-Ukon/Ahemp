@@ -20,8 +20,10 @@ Acropora hemprichii genome structural and functional annotation
 singularity pull dfam-tetools-latest.sif docker://dfam/tetools:latest
 singularity run dfam-tetools-latest.sif BuildDatabase -name Ahemp_genome Ahemp.gapclosed_f2.fasta
 singularity run dfam-tetools-latest.sif RepeatModeler -database Ahemp_genome -LTRStruct -threads 40
+````
 
 - Repeats in avliable Acropora's coral genomes
+````bash
 
 for i in `ls *.fna|sed 's/_genomic.fna//g`;
 do

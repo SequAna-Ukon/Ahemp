@@ -12,13 +12,17 @@ Acropora hemprichii genome structural and functional annotation
 ````
 
 ## Identifying and maksing Repeats
+
 - Repeats in Ahemp and avliable Acropora's coral genomes using RepeatModeler
 
 ````bash
+
 singularity pull dfam-tetools-latest.sif docker://dfam/tetools:latest
 singularity run dfam-tetools-latest.sif BuildDatabase -name Ahemp_genome Ahemp.gapclosed_f2.fasta
 singularity run dfam-tetools-latest.sif RepeatModeler -database Ahemp_genome -LTRStruct -threads 40
+
 - Repeats in avliable Acropora's coral genomes
+
 for i in `ls *.fna|sed 's/_genomic.fna//g`;
 do
     singularity run ../../dfam-tetools-latest.sif BuildDatabase -name $i ${i}_genomic.fna
@@ -35,35 +39,33 @@ unsearch ...
  
 singularity run dfam-tetools-latest.sif RepeatMasker Ahemp.gapclosed_f2.fasta -lib Acropora_RE_DB.fsa -pa 8 -norna -nolow -xsmall
 
-## How is the distribution of#rRNA
-./barrnap -q -k euk ../../Desmodesmus_quadricauda.scaffolds.fa --threads 50 --outseq ../../Desmodesmus_quadricauda.rrna.fasta > ../../rrna.gff 
- repeats by types?
+## How is the distribution of repeats by types
+
 grep '>' Dehan101_genome-families.fa | sed -r 's/.+#//' | sed -r 's/\s+.+//' | sort | uniq -c
 
 
 #RNA
-STAR --runThreadN $PBS_NUM_PPN --runMode genomeGenerate --genomeDir Dqua1_geno_index --genomeFastaFiles
-Dqua_filtered.fna --genomeSAindexNbases 10
 
-for i in `ls *.gz|sed 's/.fq.gz//g'`;
+STAR --runThreadN 50 --runMode genomeGenerate --genomeDir Ahemp_index --genomeFastaFiles
+Ahemp.gapclosed_f2.fasta --genomeSAindexNbases 10
+
+for i in `ls *.gz|sed 's/.fastq.gz//g'`;
 do
-    STAR --runThreadN 30 --genomeDir Dqua1_geno_index --readFilesIn $i.fq.gz --readFilesCommand "gunzip -c" --outSAMtype  BAM SortedByCoordinate --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outFileNamePrefix $i. --limitBAMsortRAM 10000000000;
+    STAR --runThreadN 30 --genomeDir Ahemp_index --readFilesIn $i.fastq.gz --readFilesCommand "gunzip -c" --outSAMtype  BAM SortedByCoordinate --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outFileNamePrefix $i --limitBAMsortRAM 10000000000;
 done
 
-samtools merge DquaRNASeqAll.Dqua1.bam KB_S01.Aligned.sortedByCoord.out.bam KB_S02.Aligned.sortedByCoord.out.bam KB_S03.Aligned.sortedByCoord.out.bam KB_S04.Aligned.sortedByCoord.out.bam KB_S05.Aligned.sortedByCoord.out.bam KB_S06.Aligned.sortedByCoord.out.bam KB_S07.Aligned.sortedByCoord.out.bam KB_S08.Aligned.sortedByCoord.out.bam KB_S09.Aligned.sortedByCoord.out.bam
-
+samtools merge Ahemp_RNASeqAll.STAR.bam KB_S01.Aligned.sortedByCoord.out.bam KB_S02.Aligned.sortedByCoord.out.bam KB_S03.Aligned.sortedByCoord.out.bam
 samtools view -c
-stringtie -p 4 -o DehanRNASeqAll.Stringtie.Dehan101.gtf DehanRNASeqAll.STAR.Dehan101.bam
-grep -v "#" DehanRNASeqAll.Stringtie.Dehan101.gtf | cut -f3 | sort | uniq -c
+stringtie -p 30 -o Ahemp_RNASeqAll.Stringtie.gtf Ahemp_RNASeqAll.STAR.bam
+grep -v "#" Ahemp_RNASeqAll.Stringtie.gtf  | cut -f3 | sort | uniq -c
 
-stringtie -p 30 -o DquaRNASeqAll.Dqua1.gtf DquaRNASeqAll.Dqua1.bam
-gtf_genome_to_cdna_fasta.pl DquaRNASeqAll.Dqua1.gtf Dqua_filtered.fna > DquaRNASeqAll.transcripts.fasta
-gtf_to_alignment_gff3.pl DquaRNASeqAll.Dqua1.gtf > DquaRNASeqAll.Dqua1.gff3
-TransDecoder.LongOrfs -t DquaRNASeqAll.transcripts.fasta
-diamond blastp -d /DBS/uniref90  -q Dqua1_longest_orfs.pep --max-target-seqs 1 --outfmt 6 --evalue 1e-5 --threads 30 > Dqua1_longest_orfs.out
+gtf_genome_to_cdna_fasta.pl Ahemp_RNASeqAll.Stringtie.gtf Ahemp.gapclosed_f2.fasta > Ahemp_RNASeqAll.transcripts.fasta
+gtf_to_alignment_gff3.pl Ahemp_RNASeqAll.Stringtie.gtf > Ahemp_RNASeqAll.Stringtie.gff3
+TransDecoder.LongOrfs -t Ahemp_RNASeqAll.transcripts.fasta
+diamond blastp -d /DBS/uniref90  -q Ahemp_RNASeqAll_longest_orfs.pep --max-target-seqs 1 --outfmt 6 --evalue 1e-5 --threads 30 > Ahemp_RNASeqAll_longest_orfs.out
 
-TransDecoder.Predict -t DquaRNASeqAll.transcripts.fasta --retain_blastp_hits Dqua1_longest_orfs.out
-cdna_alignment_orf_to_genome_orf.pl DquaRNASeqAll.transcripts.fasta.transdecoder.gff3 DquaRNASeqAll.Dqua1.gff3 DquaRNASeqAll.transcripts.fasta > Dqua1.StringtieTransdecoder.gff3
+TransDecoder.Predict -t Ahemp_RNASeqAll.transcripts.fasta --retain_blastp_hits Ahemp_RNASeqAll_longest_orfs.out
+cdna_alignment_orf_to_genome_orf.pl Ahemp_RNASeqAll.transcripts.fasta.transdecoder.gff3 Ahemp_RNASeqAll.Stringtie.gff3 Ahemp_RNASeqAll.transcripts.fasta > Ahemp.StringtieTransdecoder.gff3
 
 
 TSEBRA/bin/rename_gtf.py --gtf Dqua_braker/augustus.hints_utr.gtf --prefix Dqua --translation_tab translation.tab --out tsebra_result_renamed.gtf

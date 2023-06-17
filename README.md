@@ -79,7 +79,14 @@ diamond blastp -q Dqua1.braker.protein.fasta -d /DBS/uniref90 --outfmt 6 --sensi
 
 
 #funannotate
+#download/pull the image from docker hub
+$ docker pull nextgenusfs/funannotate
 
+#download bash wrapper script (optional)
+$ wget -O funannotate-docker https://raw.githubusercontent.com/nextgenusfs/funannotate/master/funannotate-docker
+
+#might need to make this executable on your system
+$ chmod +x /path/to/funannotate-docker
 ~/funannotate-docker predict -i Dqua_filtered.fna -s "Desmodesmus quadricauda" -o funannotate_predict --name Dqua --rna_bam DquaRNASeqAll.Dqua1.sort.bam --stringtie DquaRNASeqAll.Dqua1.gtf --protein_evidence uniprot_Scenedesmaceae.fasta --transcript_evidence DquaRNASeqAll.transcripts.fasta  --cpus 30
 
 #others 

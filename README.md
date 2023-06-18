@@ -51,7 +51,8 @@ grep '>' Dehan101_genome-families.fa | sed -r 's/.+#//' | sed -r 's/\s+.+//' | s
 STAR --runThreadN 50 --runMode genomeGenerate --genomeDir Ahemp_index --genomeFastaFiles
 Ahemp.gapclosed_f2.fasta --genomeSAindexNbases 10
 
-for i in `ls *.gz|sed 's/.fastq.gz//g'`;
+for i in `ls /home/voolstc/proj_Ahemp_genome/transcriptome/fastq/190911_K00235_0211_BH75G2BBXY/
+*.gz|sed 's/.fastq.gz//g'`;
 do
     STAR --runThreadN 30 --genomeDir Ahemp_index --readFilesIn $i.fastq.gz --readFilesCommand "gunzip -c" --outSAMtype  BAM SortedByCoordinate --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outFileNamePrefix $i --limitBAMsortRAM 10000000000;
 done

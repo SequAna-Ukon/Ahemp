@@ -5,7 +5,7 @@ _Acropora hemprichii_ genome structural and functional annotation
 - After the first BTK check, ~90 contigs were removed because of low coverage or non-related taxa (Ahemp.gapclosed_f1.fasta).
 - BTK was re-runed with the filtered assembly and another 528 contigs were removed for low coverage or non-related taxa contigs (Ahemp.gapclosed_f2.fasta).
 
-# Identifiy rRNA 
+# Identify rRNA 
 
 ````bash
 ./barrnap -q -k euk Ahemp.gapclosed_f2.fasta --threads 50 --outseq Ahemp_rrna.fasta > Ahemp_rrna..gff 
@@ -116,7 +116,7 @@ wget -O funannotate-docker https://raw.githubusercontent.com/nextgenusfs/funanno
 chmod +x /path/to/funannotate-docker
 ````
 
-### Gene prediction
+## Gene prediction
   
 ````bash
 funannotate-docker predict -i Ahemp.gapclosed_f2.fasta.masked -s "Acropora hemprichii" -o funannotate_predict --name Ahemp --rna_bam Ahemp_RNASeqAll.STAR.bam --stringtie Ahemp_RNASeqAll.Stringtie.gtf --protein_evidence uniprot_Acropora.faa --transcript_evidence Ahemp_RNASeqAll.transcripts.fasta  --cpus 50

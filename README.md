@@ -131,6 +131,14 @@ funannotate remote -m phobius -e abdoallah.sharaf@gmail.com -i funannotate_predi
 
 - IterProScan and emapper analyses will be computed separately
 
+mkdir my_interproscan
+cd my_interproscan
+wget https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.63-95.0/interproscan-5.63-95.0-64-bit.tar.gz
+wget https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.63-95.0/interproscan-5.63-95.0-64-bit.tar.gz.md5
+md5sum -c interproscan-5.63-95.0-64-bit.tar.gz.md5
+python3 setup.py -f interproscan.properties
+
+
 ````bash
 interproscan.sh -T $SCRATCHDIR -t p --cpu 8 -goterms -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -b Ahemp_funano_iprosc
 

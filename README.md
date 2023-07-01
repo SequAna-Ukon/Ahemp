@@ -145,6 +145,8 @@ tar -pxvzf  interproscan-5.63-95.0-64-bit.tar.gz
  
 python3 setup.py -f interproscan.properties
 
+mamba install -c bioconda -c conda-forge eggnog-mapper
+download_eggnog_data.py --data_dir /share/databases/
 
 ````bash
 /share/databases/interproscan/interproscan-5.63-95.0/interproscan.sh -t p --cpu 8 -goterms -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -b Ahemp_funano_iprosc

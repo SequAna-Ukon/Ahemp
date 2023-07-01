@@ -151,7 +151,7 @@ download_eggnog_data.py --data_dir /share/databases/
 ````bash
 /share/databases/interproscan/interproscan-5.63-95.0/interproscan.sh -t p --cpu 8 -goterms -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -b Ahemp_funano_iprosc
 
-emapper.py --cpu 30 -m diamond -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -o Ahemp_eggnog
+emapper.py --cpu 30 -m diamond --data_dir /share/databases/ -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -o Ahemp_eggnog
 ````
 - finally, implement annotation using funannotate
 ````bash

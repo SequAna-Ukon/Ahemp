@@ -122,14 +122,20 @@ chmod +x /path/to/funannotate-docker
 funannotate-docker predict -i Ahemp.gapclosed_f2.fasta.masked -s "Acropora hemprichii" -o funannotate_predict --name Ahemp --rna_bam Ahemp_RNASeqAll.STAR.bam --stringtie Ahemp_RNASeqAll.Stringtie.gtf --protein_evidence uniprot_Acropora.faa --transcript_evidence Ahemp_RNASeqAll.transcripts.fasta  --cpus 50
 ````
 
+
+
+## Functional annotation
+
+-  transmembrane topology and signal peptide predictor
+  
 ````bash
 
 funannotate remote -m phobius -e abdoallah.sharaf@gmail.com -i funannotate_predict/ -o funannotate_phobius
 ````
 
-## Functional annotation
-
-- IterProScan and emapper analyses will be computed separately
+- IterProScan and eggnog-mapper analyses will be computed separately
+- IterProScan
+````bash
 
 mkdir interproscan
 
@@ -144,16 +150,24 @@ md5sum -c interproscan-5.63-95.0-64-bit.tar.gz.md5
 tar -pxvzf  interproscan-5.63-95.0-64-bit.tar.gz
  
 python3 setup.py -f interproscan.properties
+````
+- eggnog-mapper
+````bash
 
 mamba install -c bioconda -c conda-forge eggnog-mapper
 download_eggnog_data.py --data_dir /share/databases/
+````
 
+- interproscan and eggnog-mappe searches
+- 
 ````bash
+
 /share/databases/interproscan/interproscan-5.63-95.0/interproscan.sh -t p --cpu 8 -goterms -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -b Ahemp_funano_iprosc
 
 emapper.py --cpu 30 -m diamond --data_dir /share/databases/ -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -o Ahemp_eggnog
 ````
-- finally, implement annotation using funannotate
+
+- Implement annotation using funannotate
 ````bash
 funannotate-docker annotate -i funannotate_predict/ -s "Desmodesmus quadricauda" -o funannotate_anno   --eggnog  Ahemp_eggnog.emapper.annotations --iprscan Ahemp_funano_iprosc.xml --phobius funannotate_predict/annotate_misc/phobius.results.txt  --cpus 40
 ````

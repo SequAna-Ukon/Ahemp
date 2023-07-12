@@ -82,7 +82,7 @@ samtools merge Ahemp_RNASeqAll.STAR.bam M_19_2595_HE1-33-T1_D703-D505_sortedByCo
 ````bash
 stringtie -p 30 -o Ahemp_RNASeqAll.Stringtie.gtf Ahemp_RNASeqAll.STAR.bam
 
-- to get the gtf file details "optional" 
+#to get the gtf file details "optional" 
 grep -v "#" Ahemp_RNASeqAll.Stringtie.gtf  | cut -f3 | sort | uniq -c
 ````
 

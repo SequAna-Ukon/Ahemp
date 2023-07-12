@@ -176,8 +176,8 @@ mamba install -c bioconda -c conda-forge eggnog-mapper
 - interproscan and eggnog-mappe searches
   
 ````bash
-
-/share/databases/interproscan/interproscan-5.63-95.0/interproscan.sh -t p --cpu 8 -goterms -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -b Ahemp_funano_iprosc
+mkdir Ahemp_funano_iprosc
+/share/databases/interproscan/interproscan-5.63-95.0/interproscan.sh -t p --cpu 30 -goterms -pa -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -d Ahemp_funano_iprosc
 
 emapper.py --cpu 30 -m diamond --data_dir eggnog -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -o Ahemp_eggnog
 ````

@@ -125,7 +125,7 @@ funannotate-docker predict -i Ahemp.gapclosed_f2.fasta.masked -s "Acropora hempr
 ### QC of the prediction
 
 
-- get the gff3 file details 
+- get the prediction details from gff3 file
 
 ````bash
 grep -v "#" funannotate_predict/predict_results/Acropora_hemprichii.gff3  | cut -f3 | sort | uniq -c

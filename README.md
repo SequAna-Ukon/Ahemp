@@ -122,7 +122,22 @@ chmod +x /path/to/funannotate-docker
 funannotate-docker predict -i Ahemp.gapclosed_f2.fasta.masked -s "Acropora hemprichii" -o funannotate_predict --name Ahemp --rna_bam Ahemp_RNASeqAll.STAR.bam --stringtie Ahemp_RNASeqAll.Stringtie.gtf --protein_evidence uniprot_Acropora.faa --transcript_evidence Ahemp_RNASeqAll.transcripts.fasta  --cpus 50
 ````
 
+### QC of the prediction
 
+
+- get the gff3 file details 
+
+````bash
+grep -v "#" funannotate_predict/predict_results/Acropora_hemprichii.gff3  | cut -f3 | sort | uniq -c
+````
+- BUSCO scores
+
+````bash  
+#against eukaryota_odb10
+busco -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -m proteins -l eukaryota_odb10 -c 30 -o Ahemp_busco_eukaryota
+#against metazoa_odb10
+busco -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -m proteins -l metazoa_odb10 -c 30 -o Ahemp_busco_metazoa
+````
 
 ## Functional annotation
 

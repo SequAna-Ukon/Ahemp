@@ -8,7 +8,7 @@ _Acropora hemprichii_ genome structural and functional annotation
 # Identify rRNA 
 
 ````bash
-./barrnap -q -k euk Ahemp.gapclosed_f2.fasta --threads 50 --outseq Ahemp_rrna.fasta > Ahemp_rrna..gff 
+./barrnap -q -k euk Ahemp.gapclosed_f2.fasta --threads 50 --outseq Ahemp_rrna.fasta > Ahemp_rrna.gff 
 ````
 
 ## Identifying and masking Repeats

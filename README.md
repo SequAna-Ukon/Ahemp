@@ -179,7 +179,7 @@ mamba install -c bioconda -c conda-forge eggnog-mapper
 mkdir Ahemp_funano_iprosc
 /share/databases/interproscan/interproscan-5.63-95.0/interproscan.sh -t p --cpu 30 -goterms -pa -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -d Ahemp_funano_iprosc
 
-emapper.py --cpu 30 -m diamond --data_dir eggnog -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -o Ahemp_eggnog
+emapper.py --cpu 30 -m diamond --data_dir /share/databases/eggnog/ -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -o Ahemp_eggnog
 ````
 
 - Implement annotation using funannotate

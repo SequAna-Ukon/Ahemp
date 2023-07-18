@@ -147,7 +147,8 @@ busco -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -m 
 #download the program from:
 https://phobius.sbc.su.se/data.html
 #decompress
-cat phobius101_linux.tgz| tar xz 
+cat phobius101_linux.tgz| tar xz
+#Edit phobius.pl L25 to my $DECODEANHMM = "$PHOBIUS_DIR/decodeanhmm.64bit"
 #run the analysis
 phobius/phobius.pl -short Acropora_hemprichii.proteins.fa > phobius.results.txt
 

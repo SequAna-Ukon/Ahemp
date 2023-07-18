@@ -142,10 +142,15 @@ busco -i funannotate_predict/predict_results/Acropora_hemprichii.proteins.fa -m 
 ## Functional annotation
 
 -  transmembrane topology and signal peptide predictor
-  
+- install phobius
 ````bash
+#download the program from:
+https://phobius.sbc.su.se/data.html
+#decompress
+cat phobius101_linux.tgz| tar xz 
+#run the analysis
+phobius/phobius.pl -short Acropora_hemprichii.proteins.fa > phobius.results.txt
 
-funannotate remote -m phobius -e abdoallah.sharaf@gmail.com -i funannotate_predict/ -o funannotate_phobius
 ````
 
 - IterProScan and eggnog-mapper analyses will be computed separately
@@ -184,5 +189,5 @@ emapper.py --cpu 30 -m diamond --data_dir /share/databases/eggnog/ -i funannotat
 
 - Implement annotation using funannotate
 ````bash
-funannotate-docker annotate -i funannotate_predict/ -s "Acropora hemprichii" -o funannotate_anno --busco_db  metazoa --eggnog  Ahemp_eggnog.emapper.annotations --iprscan Ahemp_funano_iprosc.xml --phobius funannotate_predict/annotate_misc/phobius.results.txt  --cpus 40
+funannotate-docker annotate -i funannotate_predict/ -s "Acropora hemprichii" -o funannotate_anno --busco_db  metazoa --eggnog  Ahemp_eggnog.emapper.annotations --iprscan Ahemp_funano_iprosc.xml --phobius phobius.results.txt  --cpus 40
 ````

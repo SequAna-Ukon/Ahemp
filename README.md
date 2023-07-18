@@ -184,5 +184,5 @@ emapper.py --cpu 30 -m diamond --data_dir /share/databases/eggnog/ -i funannotat
 
 - Implement annotation using funannotate
 ````bash
-funannotate-docker annotate -i funannotate_predict/ -s "Acropora hemprichii" -o funannotate_anno   --eggnog  Ahemp_eggnog.emapper.annotations --iprscan Ahemp_funano_iprosc.xml --phobius funannotate_predict/annotate_misc/phobius.results.txt  --cpus 40
+funannotate-docker annotate -i funannotate_predict/ -s "Acropora hemprichii" -o funannotate_anno --busco_db  metazoa --eggnog  Ahemp_eggnog.emapper.annotations --iprscan Ahemp_funano_iprosc.xml --phobius funannotate_predict/annotate_misc/phobius.results.txt  --cpus 40
 ````

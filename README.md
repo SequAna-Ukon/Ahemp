@@ -115,6 +115,13 @@ wget -O funannotate-docker https://raw.githubusercontent.com/nextgenusfs/funanno
 ````bash
 chmod +x /path/to/funannotate-docker
 ````
+### Install GeneMark
+- Download GeneMark-ES/ET/EP+ ver 4.71_lic and key from http://topaz.gatech.edu/GeneMark/license_download.cgi  
+- extract folders and copy the key as "cp -r gm_key/ ~/.gm_key/"
+- locate the perl "which perl", change all script perl tag from gmes folder "perl change_path_in_perl_scripts.pl 'perl PATH'"
+- set the path for GeneMark using "export GENEMARK_PATH=~/gmes/"
+- making sure that "gmes_petap.pl" in the PATH using "export PATH=$PATH:~/gmes/"
+- Finally, check that everything is working using "funannotate check"
 
 ## Gene prediction
   

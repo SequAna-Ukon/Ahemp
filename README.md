@@ -123,6 +123,12 @@ chmod +x /path/to/funannotate-docker
 - making sure that "gmes_petap.pl" in the PATH using "export PATH=$PATH:~/gmes/"
 - Finally, check that everything is working using "funannotate check"
 
+### SNAP 
+-It's recomended to install SNAP locally not through conda using:
+git clone https://github.com/KorfLab/SNAP.git && cd SNAP/ && make &&  cp forge /opt/conda/envs/myenv/bin/
+
+- Use "funannotate test -t predict", to ensure that all predictors are working.
+   
 ## Gene prediction
   
 ````bash

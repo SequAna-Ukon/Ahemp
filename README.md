@@ -133,6 +133,10 @@ git clone https://github.com/KorfLab/SNAP.git && cd SNAP/ && make &&  cp forge /
   
 ````bash
 funannotate-docker predict -i Ahemp.gapclosed_f2.fasta.masked -s "Acropora hemprichii" -o funannotate_predict --name Ahemp --rna_bam Ahemp_RNASeqAll.STAR.bam --stringtie Ahemp_RNASeqAll.Stringtie.gtf --protein_evidence uniprot_Acropora.faa --transcript_evidence Ahemp_RNASeqAll.transcripts.fasta  --cpus 50
+
+##prediction can be updated by adding UTR, for this all RNASeq data were merged and running follwing command
+funannotate update -i funannotate_predict_Abdo/ --species "Acropora hemprichii" -l Ahemp_RNASeqAll_1.fastq.gz -r Ahemp_RNASeqAll_2.fastq.gz --cpus 50
+
 ````
 
 ### QC of the prediction

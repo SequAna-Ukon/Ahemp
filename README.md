@@ -5,9 +5,9 @@ _Acropora hemprichii_ genome structural and functional annotation
 - After the first BTK check, ~90 contigs were removed because of low coverage or non-related taxa (Ahemp.gapclosed_f1.fasta).
 - BTK was re-runed with the filtered assembly and another 528 contigs were removed for low coverage or non-related taxa contigs (Ahemp.gapclosed_f2.fasta).
 # clean assembly 
-````
-funannotate clean -i Ahemp.gapclosed_f2.fasta -m 200 -o Ahemp_clean.fasta
 ````bash
+funannotate clean -i Ahemp.gapclosed_f2.fasta -m 200 -o Ahemp_clean.fasta
+````
 # Identify rRNA 
 
 ````bash

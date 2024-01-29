@@ -34,6 +34,12 @@ docker run -v $PWD:/in -w /in oushujun/edta:2.0.0 EDTA.pl --genome Ahemp_final.f
 singularity pull dfam-tetools-latest.sif docker://dfam/tetools:latest
 singularity run dfam-tetools-latest.sif BuildDatabase -name Ahemp_genome Ahemp.gapclosed_f2.fasta
 singularity run dfam-tetools-latest.sif RepeatModeler -database Ahemp_genome -LTRStruct -threads 40
+OR
+
+docker run -it --rm --workdir /work -v $(pwd):/work dfam/tetools:latest
+BuildDatabase -name Ahemp_genome Ahemp_final.fasta
+RepeatModeler -database Ahemp_genome -LTRStruct -threads 30
+
 ````
 
 - available Repeats in  Acropora's coral genomes

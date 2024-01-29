@@ -9,10 +9,10 @@ _Acropora hemprichii_ genome structural and functional annotation
 ````bash
 funannotate clean -i Ahemp.gapclosed_f2.fasta -m 200 -o Ahemp_clean.fasta
 ````
-# Identify rRNA 
+# Identify rRNA using [barrnap](https://github.com/tseemann/barrnap)
 
 ````bash
-./barrnap -q -k euk Ahemp.gapclosed_f2.fasta --threads 50 --outseq Ahemp_rrna.fasta > Ahemp_rrna.gff 
+./barrnap -q -k euk Ahemp_final.fasta --threads 50 --outseq Ahemp_rrna.fasta > Ahemp_rrna.gff 
 ````
 
 ## Identifying and masking Repeats

@@ -10,14 +10,14 @@ _Acropora hemprichii_ genome structural and functional annotation
           samtools view -@ 30 -T Ahemp_final.fasta -C -o Ahemp.cram Ahemp_unaligned.bam
           ````
           - prepare a full metadata.yaml file, [example](https://github.com/blobtoolkit/blobtoolkit/tree/main/src/blobtoolkit-pipeline/src#configuration)
-          - prepare .csv input file
+          - prepare .csv input sheet
           ````
           sample,datatype,datafile
           Ahemp,ont,Ahmep.cram
           ````
           - run the nextflow command
           ````bash
-          nextflow run sanger-tol/blobtoolkit --input SAMPLESHEET --fasta Ahemp_final.fasta –-accession Ahemp --taxon 213635 --yaml Ahemp.yaml --taxdump /share/databases/taxdump --blastp /share/databases/taxdump --blastn /share/databases/uniprot --blastx /share/databases/uniprot
+          nextflow run sanger-tol/blobtoolkit --input Ahemp.csv --fasta Ahemp_final.fasta –-accession Ahemp --taxon 213635 --yaml Ahemp.yaml --taxdump /share/databases/taxdump --blastp /share/databases/taxdump --blastn /share/databases/uniprot --blastx /share/databases/uniprot
           ````
 - After the first BTK check, ~90 contigs were removed because of low coverage or non-related taxa (Ahemp.gapclosed_f1.fasta).
 - BTK was re-runed with the filtered assembly and another 528 contigs were removed for low coverage or non-related taxa contigs (Ahemp.gapclosed_f2.fasta).

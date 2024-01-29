@@ -1,13 +1,13 @@
 # Ahemp
 _Acropora hemprichii_ genome structural and functional annotation
-- The quality of the assembled genome was assessed using BlobToolKit (BTK), full handout for how to run it can be found here (https://github.com/blobtoolkit/tutorials/tree/main/futurelearn).Also, a course on BTK is available as well https://www.futurelearn.com/courses/eukaryotic-genome-assembly-how-to-use-blobtoolkit-for-quality-assessment
+- The quality of the assembled genome was assessed using BlobToolKit (BTK), full handout for how to run it can be found here (https://github.com/blobtoolkit/tutorials/tree/main/futurelearn). Also, a course on BTK is available as well https://www.futurelearn.com/courses/eukaryotic-genome-assembly-how-to-use-blobtoolkit-for-quality-assessment
 - For the second round, i used the new nextflow pipeline for BTK (https://pipelines.tol.sanger.ac.uk/blobtoolkit/0.2.0).
      - it requires:
           - download BUSCO database.
           - converts sequencing data to .CRAM
           ````bash
           java -jar build/libs/picard.jar FastqToSam F1=/home/fiesingera/proj/Ahemp_genome/Ahemp_raw_data/Ahem_1.fastq.gz F2=/home/fiesingera/proj/Ahemp_genome/Ahemp_raw_data/Ahem_2.fastq.gz  O=Ahemp_unaligned.bam SM=Ahemp
-          
+          samtools view -T Ahemp_final.fasta -C -o Ahemp.cram Ahemp_unaligned.bam
           ````
 - After the first BTK check, ~90 contigs were removed because of low coverage or non-related taxa (Ahemp.gapclosed_f1.fasta).
 - BTK was re-runed with the filtered assembly and another 528 contigs were removed for low coverage or non-related taxa contigs (Ahemp.gapclosed_f2.fasta).

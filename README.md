@@ -4,6 +4,7 @@ _Acropora hemprichii_ genome structural and functional annotation
 
 - After the first BTK check, ~90 contigs were removed because of low coverage or non-related taxa (Ahemp.gapclosed_f1.fasta).
 - BTK was re-runed with the filtered assembly and another 528 contigs were removed for low coverage or non-related taxa contigs (Ahemp.gapclosed_f2.fasta).
+- After submitting the genome to NCBI, you have been asked to remove several contigs, which we did using "funannotate clean" and manually. we end up with 33983 contigs/scaffolds
 # clean assembly 
 ````bash
 funannotate clean -i Ahemp.gapclosed_f2.fasta -m 200 -o Ahemp_clean.fasta
@@ -15,6 +16,16 @@ funannotate clean -i Ahemp.gapclosed_f2.fasta -m 200 -o Ahemp_clean.fasta
 ````
 
 ## Identifying and masking Repeats
+- We Identify repeats in Ahemp using RepeatModeler and EDTA, to confirm the repeats percentages.
+### [EDTA](https://github.com/oushujun/EDTA) 
+
+````bash
+docker pull oushujun/edta:2.0.0
+docker run -v $PWD:/in -w /in oushujun/edta:2.0.0 EDTA.pl --genome Ahemp_final.fasta --threads 30
+````
+
+### RepeatModeler
+
 
 - Repeats in Ahemp and available Acropora's coral genomes using RepeatModeler
 

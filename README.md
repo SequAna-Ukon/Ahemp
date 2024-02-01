@@ -44,7 +44,6 @@ docker run -v $PWD:/in -w /in oushujun/edta:2.0.0 EDTA.pl --genome Ahemp_final.f
 ### RepeatModeler
 
 
-- Repeats in Ahemp and available Acropora's coral genomes using RepeatModeler
 
 ````bash
 
@@ -58,6 +57,8 @@ BuildDatabase -name Ahemp_genome Ahemp_final.fasta
 RepeatModeler -database Ahemp_genome -LTRStruct -threads 30
 
 ````
+
+- Then merged the indetified repeats from RepeatModeler and EDTA
 
 - available Repeats in  Acropora's coral genomes
   

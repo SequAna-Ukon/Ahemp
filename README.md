@@ -41,6 +41,32 @@ docker pull oushujun/edta:2.0.0
 docker run -v $PWD:/in -w /in oushujun/edta:2.0.0 EDTA.pl --genome Ahemp_final.fasta --threads 30
 ````
 
+### Kmer profiling
+
+#### Smudgeplot https://github.com/KamilSJaron/smudgeplot
+
+- first needs calculate kmer frequencies and generate a histogram of kmers of the trimmed reads using KMC:
+````bash
+mkdir tmp
+ls *.fastq.gz > FILES
+# kmer 21, 16 threads, 64G of memory, counting kmer coverages between 1 and 10000x
+./KMC/bin/kmc -k21 -t16 -m64 -ci1 -cs10000 @FILES kmcdb tmp
+./KMC/bin/kmc_tools transform kmcdb histogram kmcdb_k21.hist -cx10000
+````
+-  extract genomic kmers using reasonable coverage thresholds.
+````bash
+mamba install -c bioconda smudgeplot
+L=$(smudgeplot.py cutoff kmcdb_k21.hist L)
+U=$(smudgeplot.py cutoff kmcdb_k21.hist U)
+echo $L $U # these need to be sane values
+# L should be like 20 - 200
+# U should be like 500 - 3000
+````
+- run smudge_pairs on the reduced file to compute the set of kmer pairs.
+````bash
+kmc_tools transform kmcdb -ci"$L" -cx"$U" reduce kmcdb_L"$L"_U"$U"
+smudge_pairs kmcdb_L"$L"_U"$U" kmcdb_L"$L"_U"$U"_coverages.tsv kmcdb_L"$L"_U"$U"_pairs.tsv > kmcdb_L"$L"_U"$U"_familysizes.tsv
+````
 ### RepeatModeler
 
 

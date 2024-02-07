@@ -55,7 +55,9 @@ ls *.fastq.gz > FILES
 ````
 -  extract genomic kmers using reasonable coverage thresholds.
 ````bash
-mamba install -c bioconda smudgeplot
+#install smudgeplot following
+https://github.com/KamilSJaron/smudgeplot/wiki/installation
+
 L=$(smudgeplot.py cutoff kmcdb_k21.hist L)
 U=$(smudgeplot.py cutoff kmcdb_k21.hist U)
 echo $L $U # these need to be sane values

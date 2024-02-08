@@ -219,6 +219,13 @@ phobius/phobius.pl -short Acropora_hemprichii.proteins.fa > phobius.results.txt
 
 - IterProScan and eggnog-mapper analyses will be computed separately
 - IterProScan
+- i used the funnannotate command
+  
+````bash
+funannotate iprscan -i funannotate_final -m docker -c 30
+````
+- but also can be installed locally using:
+  
 ````bash
 
 mkdir interproscan
@@ -235,6 +242,7 @@ tar -pxvzf  interproscan-5.63-95.0-64-bit.tar.gz
  
 python3 setup.py -f interproscan.properties
 ````
+
 - eggnog-mapper
 ````bash
 

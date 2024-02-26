@@ -47,16 +47,8 @@ docker run -v $PWD:/in -w /in oushujun/edta:2.0.0 EDTA.pl --genome Ahemp_final.f
 
 
 ````bash
-
-singularity pull dfam-tetools-latest.sif docker://dfam/tetools:latest
-singularity run dfam-tetools-latest.sif BuildDatabase -name Ahemp_genome Ahemp.gapclosed_f2.fasta
-singularity run dfam-tetools-latest.sif RepeatModeler -database Ahemp_genome -LTRStruct -threads 40
-OR
-
-docker run -it --rm --workdir /work -v $(pwd):/work dfam/tetools:latest
-BuildDatabase -name Ahemp_genome Ahemp_final.fasta
-RepeatModeler -database Ahemp_genome -LTRStruct -threads 30
-
+docker run -v $PWD:/in -w /in dfam/tetools:latest BuildDatabase -name Ahemp_genome Ahemp_final.fasta
+docker run -v $PWD:/in -w /in dfam/tetools:latest RepeatModeler -database Ahemp_genome -LTRStruct -threads 30
 ````
 
 - Then merged the indetified repeats from RepeatModeler and EDTA
@@ -67,8 +59,8 @@ RepeatModeler -database Ahemp_genome -LTRStruct -threads 30
 
 for i in `ls *.fna|sed 's/_genomic.fna//g`;
 do
-    singularity run ../../dfam-tetools-latest.sif BuildDatabase -name $i ${i}_genomic.fna
-    singularity run ../../dfam-tetools-latest.sif RepeatModeler -database $i -LTRStruct -threads 40;
+    docker run -v $PWD:/in -w /in dfam/tetools:latest BuildDatabase -name $i ${i}_genomic.fna
+    docker run -v $PWD:/in -w /in dfam/tetools:latest RepeatModeler -database $i -LTRStruct -threads 40;
 done
 ````
 
@@ -84,7 +76,7 @@ unsearch -fastx_uniques Acropora_RE_DB.fsa -fastaout Acropora_RE_DB.faa
 - Repeats masking in Ahemp using Acropora repeats DB
 
 ````bash
-singularity run dfam-tetools-latest.sif RepeatMasker Ahemp.gapclosed_f2.fasta -lib Acropora_RE_DB.faa -pa 8 -norna -nolow -xsmall
+docker run -v $PWD:/in -w /in dfam/tetools:latest RepeatMasker Ahemp.gapclosed_f2.fasta -lib Acropora_RE_DB.faa -pa 8 -norna -xsmall 
 ````
 
 - How is the distribution of repeats by types
@@ -92,7 +84,7 @@ singularity run dfam-tetools-latest.sif RepeatMasker Ahemp.gapclosed_f2.fasta -l
 ````bash
 grep '>' Ahemp_genome_f2-families.fa | sed -r 's/.+#//' | sed -r 's/\s+.+//' | sort | uniq -c
 ````
-
+- the full report of the repeats percentage will outputted after masking in ```Ahemp.gapclosed_f2.fasta.tbl``` file
 ## Preparing RNASeq evidence 
 
 - Indexing the assembled genome
